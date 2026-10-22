@@ -13,12 +13,6 @@ Applicazione desktop Windows in C# / WPF (.NET 8).
 - Il motore simula lo scambio su una copia dell'orario e lo applica solo se non si creano buchi.
 - Per cambiare selezione, fare clic su una cella già selezionata oppure, dopo due selezioni, su una nuova cella.
 
-## Struttura
-- `Model`: tessera (materia, aula), posizione e matrice dell'orario.
-- `Engine`: motore degli scambi, validatore e risultato.
-- `Controller`: stato delle due selezioni e richiesta al motore.
-- `View`: XAML e creazione dei 40 pulsanti nel code-behind; nessuna regola didattica nella GUI.
-
 ## Dati di esempio
 34 lezioni: 7 ore dal lunedì al giovedì e 6 il venerdì. Le altre 6 celle sono vuote, tutte a fine giornata. Le materie e le aule sono dati dimostrativi.
 
