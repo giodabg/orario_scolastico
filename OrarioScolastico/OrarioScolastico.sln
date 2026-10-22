@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37216.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrarioScolastico", "OrarioScolastico.csproj", "{9A563DBF-EDDB-4099-887E-DEECAB957F04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrarioScolastico", "OrarioScolastico.csproj", "{495E88B3-E057-4335-AD16-4BE612B6F364}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9A563DBF-EDDB-4099-887E-DEECAB957F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A563DBF-EDDB-4099-887E-DEECAB957F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A563DBF-EDDB-4099-887E-DEECAB957F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A563DBF-EDDB-4099-887E-DEECAB957F04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{495E88B3-E057-4335-AD16-4BE612B6F364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495E88B3-E057-4335-AD16-4BE612B6F364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495E88B3-E057-4335-AD16-4BE612B6F364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{495E88B3-E057-4335-AD16-4BE612B6F364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3C71AD15-DDC6-46FD-B492-C56566067D28}
+		SolutionGuid = {5332F021-E3B0-4DDD-85E2-4CD04A59D411}
 	EndGlobalSection
 EndGlobal
