@@ -1,0 +1,26 @@
+<Window x:Class="OrarioClasse.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Orario di classe" Height="650" Width="900"
+        MinHeight="500" MinWidth="650">
+    <DockPanel Margin="15">
+        <TextBlock DockPanel.Dock="Top"
+                   Text="Orario della classe — 5 giorni, 8 ore"
+                   FontSize="20" FontWeight="Bold"
+                   Margin="0,0,0,12" />
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    Margin="0,12,0,0">
+            <Button x:Name="btnScambia"
+                    Content="Scambia"
+                    Width="110" Height="35"
+                    IsEnabled="False"
+                    Click="Scambia_Click" />
+            <TextBlock x:Name="txtStato"
+                       Text="Seleziona due celle."
+                       VerticalAlignment="Center"
+                       Margin="15,0,0,0" />
+        </StackPanel>
+        <Grid x:Name="grigliaOrario" />
+    </DockPanel>
+</Window>
