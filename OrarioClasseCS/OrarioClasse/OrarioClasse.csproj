@@ -36,16 +36,42 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml"><Generator>MSBuild:Compile</Generator><SubType>Designer</SubType></ApplicationDefinition>
-    <Page Include="MainWindow.xaml"><Generator>MSBuild:Compile</Generator><SubType>Designer</SubType></Page>
-    <Compile Include="App.xaml.cs"><DependentUpon>App.xaml</DependentUpon></Compile>
-    <Compile Include="MainWindow.xaml.cs"><DependentUpon>MainWindow.xaml</DependentUpon></Compile>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Tessera.cs" />
     <Compile Include="Model\Posizione.cs" />
     <Compile Include="Model\Orario.cs" />
     <Compile Include="Engine\ValidatoreOrario.cs" />
     <Compile Include="Engine\MotoreScambi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Immagini\informatica.png" />
+    <Resource Include="Immagini\inglese.png" />
+    <Resource Include="Immagini\italiano.png" />
+    <Resource Include="Immagini\matematica.png" />
+    <Resource Include="Immagini\sconosciuta.png" />
+    <Resource Include="Immagini\sistemi.png" />
+    <Resource Include="Immagini\storia.png" />
+    <Resource Include="Immagini\tps.png" />
+    <Resource Include="Immagini\vuota.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Immagini\religione.png" />
+    <Resource Include="Immagini\scienze_motorie.png" />
+    <Resource Include="Immagini\telecomunicazioni.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
