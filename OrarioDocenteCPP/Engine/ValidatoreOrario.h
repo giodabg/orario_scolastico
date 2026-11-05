@@ -3,5 +3,5 @@
 
 class ValidatoreOrario {
 public:
-    bool SenzaBuchi(Orario& orario);
+    bool ControlloOre(Orario& orario);
 };
