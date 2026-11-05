@@ -10,10 +10,10 @@ bool MotoreScambi::Scambia(Orario& orario, Posizione prima, Posizione seconda) {
         prima.GetOra() == seconda.GetOra()) return false;
 
     // Il prototipo richiede un orario inizialmente valido.
-    if (!validatore.SenzaBuchi(orario)) return false;
+    if (!validatore.ControlloOre(orario)) return false;
 
     orario.ScambiaCelle(prima, seconda);
-    if (validatore.SenzaBuchi(orario)) return true;
+    if (validatore.ControlloOre(orario)) return true;
 
     // La seconda chiamata ripristina esattamente lo stato precedente.
     orario.ScambiaCelle(prima, seconda);
