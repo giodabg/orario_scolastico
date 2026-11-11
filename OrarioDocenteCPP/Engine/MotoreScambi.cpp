@@ -9,13 +9,13 @@ bool MotoreScambi::Scambia(Orario& orario, Posizione prima, Posizione seconda) {
     if (prima.GetGiorno() == seconda.GetGiorno() &&
         prima.GetOra() == seconda.GetOra()) return false;
 
-    // Il prototipo richiede un orario inizialmente valido.
-    if (!validatore.ControlloOre(orario)) return false;
+    // L'orario di partenza deve essere privo di buchi.
+    if (!validatore.SenzaBuchi(orario)) return false;
 
     orario.ScambiaCelle(prima, seconda);
-    if (validatore.ControlloOre(orario)) return true;
+    if (validatore.SenzaBuchi(orario)) return true;
 
-    // La seconda chiamata ripristina esattamente lo stato precedente.
+    // Se lo scambio crea un buco, ripristina l'orario precedente.
     orario.ScambiaCelle(prima, seconda);
     return false;
 }
