@@ -86,3 +86,8 @@ Non serve `Program.cs`: il punto di ingresso WPF è generato da `App.xaml`.
 - Selezionare lunedì 3ª ora e venerdì 7ª ora vuota: scambio rifiutato.
 
 **Nota:** la compilazione dell'applicazione WPF richiede Visual Studio/MSBuild su Windows.
+
+
+### Convenzione per i prototipi C++
+
+Le versioni consolidate del progetto docente sono conservate in cartelle autonome `OrarioDocenteCPP_P1`, `OrarioDocenteCPP_P2`, ecc. Ogni fase contiene la propria soluzione Visual Studio (`.sln`) e il progetto (`.vcxproj`). La fase successiva parte da una copia della precedente, senza sovrascriverla.
