@@ -1,7 +1,7 @@
 # Progetto Orario Scolastico in C++
 ## Documento guida per la programmazione didattica e lo sviluppo incrementale
 
-**Versione:** 1.0 — 4 novembre 2026  
+**Versione:** 1.1 — 11 novembre 2026  
 **Destinatari:** classe quarta, indirizzo Informatica  
 **Stato:** documento di riferimento; durata delle fasi da definire  
 **Formato:** Markdown, da conservare nel repository e utilizzare come fonte nelle chat dedicate alle singole fasi.
@@ -12,7 +12,7 @@
 
 Il percorso sviluppa competenze di programmazione C++ e progettazione software attraverso prototipi successivi di un gestore di orari scolastici. Il docente realizza e illustra **l'orario dal punto di vista del docente**; gli studenti progettano **l'orario dal punto di vista della classe**. I due percorsi, inizialmente indipendenti, convergono in un'applicazione integrata.
 
-**Obiettivo finale:** gestire un numero configurabile **X di classi** e **Y di docenti**, con lezioni condivise, viste coerenti, controlli sui conflitti, scambi, annullamento, richieste di modifica e semplici analisi. Il programma **non genera automaticamente** un orario ottimale. Interfaccia iniziale e principale: **console C++**.
+**Obiettivo finale:** gestire un numero configurabile **X di classi** e **Y di docenti**, con lezioni condivise, viste coerenti, controlli sui conflitti, scambi, annullamento, richieste di modifica e semplici analisi. Il programma **non genera automaticamente** un orario ottimale. Interfaccia della versione C++: **console**. Dopo il completamento e il collaudo del nucleo C++ è prevista una fase aggiuntiva **P10** per realizzare un'interfaccia grafica **C# / WPF**, riutilizzando `Model` ed `Engine` C++ tramite un livello di interoperabilità **C++/CLI**. La versione console rimane un prodotto completo e verificabile.
 
 Il progetto serve a introdurre i concetti, non a massimizzare il numero di funzionalità. Ogni versione deve compilare, essere eseguibile e avere criteri di accettazione verificabili.
 
@@ -29,6 +29,7 @@ Al termine del percorso lo studente sa:
 7. Progettare operazioni di modifica che preservino la coerenza del modello; predisporre test e diagnosticare errori.
 8. Organizzare file `.h`/`.cpp`, documentare le scelte e utilizzare Git per lo sviluppo incrementale.
 9. Individuare duplicazioni fra due applicazioni e proporre componenti comuni senza forzare l'ereditarietà.
+10. Nell'estensione P10, collegare un'interfaccia WPF in C# a componenti C++ nativi attraverso un bridge C++/CLI, senza duplicare la logica applicativa e rispettando la proprietà degli oggetti.
 
 **Approfondimenti non obbligatori:** implementazione fisica di liste, pile e code con nodi; alberi binari, visite ricorsive e alberi di ricerca; strutture bilanciate. La ricorsione può essere trattata anche con esercizi autonomi.
 
@@ -49,7 +50,19 @@ Al termine del percorso lo studente sa:
 | RF11 | Verificare vincoli estensibili | Nuovi vincoli aggiungibili tramite polimorfismo |
 | RF12 | Eseguire ricerche e statistiche | Risultati verificabili su dati di prova |
 
-**Fuori ambito obbligatorio:** generazione automatica dell'orario, ottimizzazione combinatoria, interfaccia grafica, database, gestione avanzata delle aule, distribuzione su rete. Le aule possono restare attributo facoltativo delle lezioni.
+**Fuori ambito obbligatorio per P0–P9:** generazione automatica dell'orario, ottimizzazione combinatoria, interfaccia grafica, database, gestione avanzata delle aule, distribuzione su rete. L'interfaccia grafica è prevista separatamente nella **P10**, senza modificare i requisiti di completamento della versione console.
+
+### 3.2 Requisiti dell'estensione WPF (P10)
+
+| ID | Requisito | Accettazione di massima |
+|---|---|---|
+| RG01 | Visualizzare in WPF gli orari di classi e docenti | Le due viste mostrano i dati del medesimo `OrarioIstituto` C++ |
+| RG02 | Richiedere scambi dall'interfaccia grafica | Le richieste sono delegate al motore C++; esiti e messaggi sono visualizzati in C# |
+| RG03 | Preservare invarianti e annullamento | Scambi rifiutati senza effetti; annullamenti coerenti in entrambe le viste |
+| RG04 | Isolare l'interoperabilità | Il bridge C++/CLI espone dati e operazioni .NET senza trasferire puntatori nativi alla UI |
+| RG05 | Gestire durata e proprietà delle risorse | Nessuna doppia deallocazione; rilascio controllato del modello nativo |
+| RG06 | Mantenere indipendente il nucleo C++ | `Model` ed `Engine` non dipendono da WPF né duplicano la logica in C# |
+ Le aule possono restare attributo facoltativo delle lezioni.
 
 ### 3.1 Invarianti finali del modello
 
@@ -82,6 +95,8 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 - Usare `const` e riferimenti quando appropriato; introdurre `unique_ptr` soltanto dopo ownership e polimorfismo.
 - Non anticipare nei tutorial costrutti non ancora insegnati, salvo segnalarli esplicitamente come codice fornito e non richiesto.
 - Per ogni fase: interfacce essenziali stabili, test minimi, codice compilabile, commit/tag di versione.
+- `Model` ed `Engine` non devono contenere `cin`/`cout` per l'interazione con l'utente né dipendere da WPF; input, output e presentazione spettano a `InterfacciaConsole` nella versione C++ e alla UI WPF nella P10.
+- Preparare l'interoperabilità mantenendo API applicative ben definite; nella P10 il bridge converte i dati C++ in tipi utilizzabili da .NET e non espone `Tessera*` o altri puntatori nativi all'interfaccia C#.
 - Pile e code: **ADT e uso STL obbligatori**; implementazione con nodi facoltativa. `std::list` non va inserita artificiosamente se `vector` è più adatto.
 - Alberi binari: approfondimento autonomo; `map` e `set` non espongono l'albero sottostante.
 
@@ -98,7 +113,10 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 | P6 | Ricerca e analisi | Iteratori, algoritmi STL, template | P1–P5 |
 | P7 | Orari di più soggetti | Contenitori, identità, ricerca, vincoli incrociati | P6 |
 | P8 | Modello istituto e viste integrate | Riutilizzo, composizione, coerenza dei dati | P7 |
-| P9 | Collaudo e consegna finale | Testing, Git, documentazione | P8 |
+| P9 | Collaudo e consegna della versione C++ | Testing, Git, documentazione | P8 |
+| P10 | Interfaccia WPF sul nucleo C++ | Eventi WPF, interoperabilità C++/CLI, gestione risorse | P9 |
+
+La **P10** è un'estensione successiva alla consegna del programma console: non introduce una seconda implementazione di `Model` ed `Engine` in C#.
 
 Le fasi P7 e P8 sono esplicite perché il requisito **X classi / Y docenti** non deve essere trattato come un semplice dettaglio dell'ultima versione. La distribuzione oraria resta aperta.
 
@@ -244,7 +262,21 @@ Le fasi P7 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Compito studenti:** test indipendenti, correzioni e dimostrazione del proprio contributo al programma integrato.
 - **Vincoli:** nessuna nuova funzionalità obbligatoria; priorità alla stabilità.
 - **Verifica oggettiva:** matrice RF01–RF12 superata su dataset condiviso, nessuna incoerenza nota, build riproducibile e documentazione aggiornata.
-- **Output:** versione finale del Gestore Orario.
+- **Output:** versione finale del Gestore Orario in C++ con interfaccia console; base stabile per l'eventuale P10.
+
+### P10 — Integrazione C++/C# e interfaccia grafica WPF
+
+- **Obiettivo:** realizzare una GUI WPF in C# riutilizzando `Model` ed `Engine` C++ già collaudati.
+- **Problema concreto:** sostituire l'interazione console con eventi e controlli grafici senza riscrivere la logica dell'orario.
+- **Nuovi concetti:** interoperabilità fra codice nativo e .NET tramite C++/CLI; programmazione guidata dagli eventi.
+- **Prerequisiti:** P9; nozioni di base di C#, XAML, eventi WPF e gestione delle risorse.
+- **Competenze:** progettare un bridge, trasferire dati e risultati in modo sicuro, gestire la durata degli oggetti nativi, separare UI e servizi applicativi.
+- **Argomenti:** libreria C++ nativa, progetto C++/CLI, classi bridge, conversione di stringhe e oggetti, code-behind WPF, gestori di eventi, rilascio delle risorse.
+- **Prototipo docente:** finestra WPF per consultare l'orario dei docenti ed eseguire scambi delegati al motore C++.
+- **Compito studenti:** realizzare la vista WPF degli orari delle classi, utilizzando lo stesso modello integrato e il bridge condiviso; verificare gli esiti con casi di prova differenti.
+- **Vincoli:** `Model` ed `Engine` restano in C++ standard; nessuna duplicazione degli algoritmi in C#; la GUI non riceve puntatori nativi; il bridge ha una responsabilità esplicita sulla durata degli oggetti.
+- **Verifica oggettiva:** RG01–RG06 superati; viste coerenti, scambi validi applicati, scambi non validi rifiutati senza modifiche, annullamento corretto, nessuna perdita o doppia liberazione di risorse nei test previsti.
+- **Output:** applicazione WPF funzionante collegata al nucleo C++ e documentazione del livello di interoperabilità.
 
 ---
 
@@ -286,7 +318,8 @@ orario-scolastico/
 │   ├── studenti/
 │   ├── integrato/
 │   └── test/
-└── csharp/              # eventuale percorso parallelo già presente
+├── bridge-cpp-cli/      # collegamento tra nucleo C++ e .NET (P10)
+└── csharp/              # interfaccia WPF (P10)
 ```
 
 Per ogni fase: specifica in Markdown, codice docente, progetto iniziale studenti, test, soluzione commentata ed esercizi di consolidamento. Le versioni stabili devono essere riconoscibili con tag o commit; evitare di sovrascrivere senza tracciamento il codice di fasi precedenti.
@@ -305,7 +338,8 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 - Convergenza finale in un sistema con X classi e Y docenti.
 - STL come strumento principale per pile, code e contenitori; implementazioni fisiche facoltative.
 - Alberi binari come approfondimento, non vincolo del progetto.
-- Interfaccia console e gestione di un orario esistente, non generazione automatica.
+- Interfaccia console per il percorso C++ P0–P9 e gestione di un orario esistente, non generazione automatica.
+- Dopo P9, estensione P10 con interfaccia C# / WPF e bridge C++/CLI, riutilizzando `Model` ed `Engine` nativi senza riscriverli.
 - Documento Markdown come fonte per chat, materiali e sviluppo.
 
 ### Decisioni ancora aperte
@@ -325,3 +359,4 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 | Versione | Data | Descrizione |
 |---|---|---|
 | 1.0 | 2026-11-04 | Prima stesura: obiettivi, requisiti, sviluppo parallelo, fasi P0–P9, integrazione finale e questioni aperte |
+| 1.1 | 2026-11-11 | Aggiunta P10: GUI WPF in C#, bridge C++/CLI, riuso di Model ed Engine C++; aggiornati competenze, requisiti, regole e struttura repository |
