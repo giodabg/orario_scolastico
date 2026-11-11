@@ -105,6 +105,9 @@ Gli studenti eseguono gli stessi tipi di prova su `ElencoAule` con dati propri. 
 - Soluzione C++ del docente pubblicata nei file `OrarioDocenteCPP`.
 - Guida laboratorio studenti: `Documentazione/P1/P1_Guida_Laboratorio.md`.
 - Dispensa teorica: `Documentazione/P1/P1_Dispensa_Teorica.md`.
-- Da produrre successivamente: esercizi con soluzioni separate, presentazione e piano di test dettagliato.
+- Esercizi studenti: `Documentazione/P1/P1_Esercizi.md`.
+- Soluzioni docente: `Documentazione/P1/P1_Soluzioni_Esercizi.md`.
+- Presentazione docente: `P1_Presentazione_Docente.pptx` (file PowerPoint da inserire nel repository).
+- Da produrre successivamente: piano di test dettagliato.
 
 **Output P1:** due applicazioni console con la matrice di tessere della P0 e un archivio dinamico di oggetti per valore. **Continuità P2:** consolidamento dei contratti, degli invarianti e delle operazioni di scambio.
