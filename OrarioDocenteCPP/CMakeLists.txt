@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(OrarioDocenteCPP
     main.cpp
+    Model/Classe.cpp
+    Model/ElencoClassi.cpp
     Model/Tessera.cpp
     Model/Posizione.cpp
     Model/Orario.cpp
