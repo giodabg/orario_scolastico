@@ -1,7 +1,7 @@
 # Progetto Orario Scolastico in C++
 ## Documento guida per la programmazione didattica e lo sviluppo incrementale
 
-**Versione:** 1.2 — 11 novembre 2026  
+**Versione:** 1.3 — 11 novembre 2026  
 **Destinatari:** classe quarta, indirizzo Informatica  
 **Stato:** documento di riferimento; durata delle fasi da definire  
 **Formato:** Markdown, da conservare nel repository e utilizzare come fonte nelle chat dedicate alle singole fasi.
@@ -87,6 +87,8 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 **Convergenza in tre momenti:** (1) sviluppo separato; (2) confronto delle interfacce, delle duplicazioni e delle differenze; (3) integrazione su modello condiviso `OrarioIstituto` con due viste. Non decidere in anticipo che le due classi debbano condividere una superclasse: valutare composizione, funzioni generiche e, solo quando giustificata, ereditarietà.
 
 ## 5. Regole tecniche e di progressione
+
+- **Ambiente unico di sviluppo e compilazione: Visual Studio con progetti C++ standard.** Non utilizzare CMake né introdurlo nelle fasi future, nel codice di riferimento o nei materiali didattici. I sorgenti sono organizzati in file `.h` e `.cpp` aggiunti direttamente al progetto Visual Studio.
 
 - Standard C++ da fissare prima della produzione del codice: **proposta C++17**, salvo vincoli dell'ambiente scolastico.
 - Preferire file `.h` e `.cpp`, con `#pragma once` negli header.
@@ -361,3 +363,7 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 | 1.0 | 2026-11-04 | Prima stesura: obiettivi, requisiti, sviluppo parallelo, fasi P0–P9, integrazione finale e questioni aperte |
 | 1.1 | 2026-11-11 | Aggiunta P10: GUI WPF in C#, bridge C++/CLI, riuso di Model ed Engine C++; aggiornati competenze, requisiti, regole e struttura repository |
 | 1.2 | 2026-11-11 | Ridefinita P1: ElencoClassi nel progetto docente ed ElencoAule nel progetto studenti con vector di oggetti per valore; matrice Tessera* invariata; adeguato raccordo con P2 |
+
+### Nota di gestione — ambiente di compilazione (11 novembre 2026)
+
+È stata adottata la scelta di usare esclusivamente Visual Studio per i progetti didattici C++ di tutte le fasi. Non aggiungere file CMake o istruzioni CMake nei materiali futuri.
