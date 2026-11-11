@@ -1,7 +1,7 @@
 # Progetto Orario Scolastico in C++
 ## Documento guida per la programmazione didattica e lo sviluppo incrementale
 
-**Versione:** 1.1 — 11 novembre 2026  
+**Versione:** 1.2 — 11 novembre 2026  
 **Destinatari:** classe quarta, indirizzo Informatica  
 **Stato:** documento di riferimento; durata delle fasi da definire  
 **Formato:** Markdown, da conservare nel repository e utilizzare come fonte nelle chat dedicate alle singole fasi.
@@ -105,7 +105,7 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 | Fase | Prototipo funzionante | Nucleo principale | Dipende da |
 |---|---|---|---|
 | P0 | Orario singolo visualizzabile | Classi, puntatori, memoria | Prerequisiti C++ |
-| P1 | Orario singolo come ADT con `vector` | Astrazione, incapsulamento, STL | P0 |
+| P1 | Orario P0 con archivio di classi/aule | `std::vector` di oggetti per valore, ricerca, incapsulamento | P0 |
 | P2 | Scambi con verifiche di base | Algoritmi, invarianti, riferimenti | P1 |
 | P3 | Vincoli estensibili | Composizione, ereditarietà, polimorfismo | P2 |
 | P4 | Cronologia e annullamento | ADT pila, `std::stack` | P2–P3 |
@@ -138,28 +138,28 @@ Le fasi P7 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** inizializzazione, lettura/scrittura, controllo degli indici, distruzione senza errori, comportamento di copia dichiarato e testato.
 - **Output:** due applicazioni console autonome; base per P1.
 
-### P1 — ADT Orario e `std::vector`
+### P1 — `std::vector` e archivi di oggetti: classi e aule
 
-- **Obiettivo:** mantenere le operazioni pubbliche sostituendo la rappresentazione interna.
-- **Problema concreto:** eliminare complessità e rischi della gestione manuale della matrice.
-- **Nuovo concetto:** ADT, indipendenza dall'implementazione, contenitore STL.
-- **Prerequisiti:** P0 e significato di incapsulamento.
-- **Competenze:** definire invarianti e contratti, usare `vector`, distinguere interfaccia da implementazione.
-- **Argomenti:** `std::vector<Tessera>`, indicizzazione giorno/ora, `const`, validazione indici, valore/riferimento.
-- **Prototipo docente:** refactoring di `OrarioDocente` con comportamento invariato.
-- **Compito studenti:** refactoring di `OrarioClasse`, mantenendo compatibili i test già realizzati.
-- **Vincoli:** nessuna nuova funzionalità di business; verificare la sicurezza di `get`.
-- **Verifica oggettiva:** test P0 ancora superati, nessun `new[]`/`delete[]` nella rappresentazione dell'orario, accessi invalidi gestiti.
-- **Output:** orari singoli basati su STL; base per P2.
+- **Obiettivo:** estendere i prototipi P0 con un archivio di entità utilizzate nell'orario, impiegando `std::vector` per memorizzare oggetti per valore, senza sostituire la matrice `Tessera* celle[5][8]`.
+- **Problema concreto:** gestire un numero variabile di classi o aule, ricercarle per sigla ed evitare duplicati, distinguendo l'archivio anagrafico dagli slot temporali dell'orario.
+- **Nuovo concetto:** contenitore dinamico `std::vector<T>`, oggetti per valore e operazioni di inserimento, accesso e ricerca; incapsulamento del contenitore in una classe dedicata.
+- **Prerequisiti:** P0, classi, puntatori, riferimenti, costruttori, accesso agli elementi di un array.
+- **Competenze:** usare `push_back`, `size` e accesso indicizzato; realizzare ricerche sequenziali; passare oggetti per riferimento costante; distinguere memorizzazione per valore da puntatori proprietari; impedire sigle duplicate.
+- **Argomenti:** `std::vector`, `const`, `const T&`, ricerca tramite identificativo, validazione degli indici, interfaccia pubblica di un archivio, copie per valore e durata dei riferimenti agli elementi.
+- **Prototipo docente:** introdurre `Classe` (sigla, indirizzo, numero studenti) ed `ElencoClassi` contenente `std::vector<Classe>`; l'elenco descrive le classi presenti nell'orario del docente. Prevedere aggiunta, ricerca, consultazione e visualizzazione via `InterfacciaConsole`.
+- **Compito studenti:** introdurre `Aula` (sigla, tipologia: aula/laboratorio/aula DADA; edificio: Lotto 1/Lotto 2/Lotto 3) ed `ElencoAule` contenente `std::vector<Aula>`; l'elenco descrive le aule utilizzate nell'orario della classe. Implementare operazioni analoghe a quelle del docente su dati differenti.
+- **Vincoli:** conservare `Orario`, `Tessera`, `Posizione` e la matrice di puntatori della P0, mantenendo scambi e verifiche già funzionanti; le tessere conservano la sigla testuale dell'entità, senza puntatori agli elementi del vettore. Non introdurre `optional`, smart pointer, gerarchie o `vector` di puntatori in questa fase. L'elenco iniziale può essere caricato da `DatiEsempio` e deve rappresentare le sigle presenti nell'orario; la sua derivazione automatica dalle tessere è un esercizio facoltativo, non un requisito di aggiornamento dinamico.
+- **Verifica oggettiva:** inserimento riuscito di un elemento nuovo; rifiuto di una sigla duplicata; ricerca presente/assente; accesso valido/non valido gestito; elenco iniziale privo di duplicati e coerente con le sigle delle tessere; funzionalità P0 ancora operative. Specificare che eventuali puntatori/referenze a elementi del `vector` non sono proprietari e possono essere invalidati da modifiche al contenitore.
+- **Output:** due applicazioni console autonome estese con archivi di oggetti per valore; base per P2. La specifica sistematica degli invarianti e degli scambi controllati rimane in P2.
 
 ### P2 — Scambio e invarianti
 
 - **Obiettivo:** effettuare scambi controllati tra due posizioni.
 - **Problema concreto:** impedire modifiche incoerenti dell'orario.
 - **Nuovo concetto:** precondizioni, postcondizioni, operazioni atomiche a livello applicativo.
-- **Prerequisiti:** P1.
+- **Prerequisiti:** P1; il motore di scambio della P0 costituisce il punto di partenza da analizzare e consolidare.
 - **Competenze:** progettare un algoritmo di modifica e preservare lo stato in caso di errore.
-- **Argomenti:** indici, `scambia`, verifica preliminare o modifica temporanea con ripristino, esito dell'operazione.
+- **Argomenti:** indici, `scambia`, verifica preliminare o modifica temporanea con ripristino, esito dell'operazione; coerenza delle sigle rispetto agli archivi introdotti in P1, ove pertinente.
 - **Prototipo docente:** scambio di impegni e controllo elementare dei buchi.
 - **Compito studenti:** scambio di lezioni con controllo semplice della giornata scolastica.
 - **Vincoli:** definire esplicitamente il significato di scambio; non introdurre ancora gerarchie di vincoli.
@@ -360,3 +360,4 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 |---|---|---|
 | 1.0 | 2026-11-04 | Prima stesura: obiettivi, requisiti, sviluppo parallelo, fasi P0–P9, integrazione finale e questioni aperte |
 | 1.1 | 2026-11-11 | Aggiunta P10: GUI WPF in C#, bridge C++/CLI, riuso di Model ed Engine C++; aggiornati competenze, requisiti, regole e struttura repository |
+| 1.2 | 2026-11-11 | Ridefinita P1: ElencoClassi nel progetto docente ed ElencoAule nel progetto studenti con vector di oggetti per valore; matrice Tessera* invariata; adeguato raccordo con P2 |
