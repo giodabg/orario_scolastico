@@ -19,3 +19,11 @@ bool DatiEsempio::Carica(Orario& orario) {
     }
     return true;
 }
+
+bool DatiEsempio::CaricaClassi(ElencoClassi& elenco) {
+    // Le sigle coincidono con quelle utilizzate nelle tessere dell'orario.
+    return elenco.Aggiungi(Classe("4AI", "Informatica", 24)) &&
+           elenco.Aggiungi(Classe("4BI", "Informatica", 22)) &&
+           elenco.Aggiungi(Classe("3AI", "Informatica", 25)) &&
+           elenco.Aggiungi(Classe("5AI", "Informatica", 21));
+}
