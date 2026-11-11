@@ -3,5 +3,6 @@
 
 class ValidatoreOrario {
 public:
-    bool ControlloOre(Orario& orario);
+    // Controlla che non vi siano ore vuote tra due lezioni dello stesso giorno.
+    bool SenzaBuchi(Orario& orario);
 };
