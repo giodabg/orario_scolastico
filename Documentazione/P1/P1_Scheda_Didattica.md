@@ -2,7 +2,7 @@
 
 **Destinatari:** quarta Informatica  
 **Versione:** 1.0 — 11 novembre 2026  
-**Riferimento:** `Documentazione/Piano_Didattico_Orario_CPP.md`, versione 1.2  
+**Riferimento:** `Documentazione/Piano_Didattico_Orario_CPP.md`, versione 1.3  
 **Prerequisito software:** prototipo P0 compilabile e funzionante.
 
 ## 1. Obiettivo e problema concreto
@@ -52,7 +52,7 @@ Per le aule considerare le tipologie **aula, laboratorio, aula DADA** e gli edif
 - `OrarioDocenteCPP/Model/Classe.h` e `.cpp`
 - `OrarioDocenteCPP/Model/ElencoClassi.h` e `.cpp`
 
-**File aggiornati:** `DatiEsempio.h/.cpp`, `InterfacciaConsole.h/.cpp`, `main.cpp`, `CMakeLists.txt`.
+**File aggiornati:** `DatiEsempio.h/.cpp`, `InterfacciaConsole.h/.cpp`, `main.cpp`.
 
 **Interfaccia dell'archivio:**
 - `bool Aggiungi(const Classe& classe)`: aggiunge una copia se la sigla non è vuota né duplicata.
@@ -103,6 +103,7 @@ Gli studenti eseguono gli stessi tipi di prova su `ElencoAule` con dati propri. 
 
 - Questa scheda docente.
 - Soluzione C++ del docente pubblicata nei file `OrarioDocenteCPP`.
-- Da produrre successivamente: guida laboratorio studenti, dispensa teorica, esercizi con soluzioni separate, presentazione e piano di test dettagliato.
+- Guida laboratorio studenti: `Documentazione/P1/P1_Guida_Laboratorio.md`.
+- Da produrre successivamente: dispensa teorica, esercizi con soluzioni separate, presentazione e piano di test dettagliato.
 
 **Output P1:** due applicazioni console con la matrice di tessere della P0 e un archivio dinamico di oggetti per valore. **Continuità P2:** consolidamento dei contratti, degli invarianti e delle operazioni di scambio.
