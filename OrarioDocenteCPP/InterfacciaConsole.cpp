@@ -5,7 +5,8 @@
 
 using namespace std;
 
-InterfacciaConsole::InterfacciaConsole(Orario& orario) : orario(orario) {}
+InterfacciaConsole::InterfacciaConsole(Orario& orario, ElencoClassi& elencoClassi)
+    : orario(orario), elencoClassi(elencoClassi) {}
 
 int InterfacciaConsole::LeggiIntero(string messaggio, int minimo, int massimo) {
     int valore;
@@ -84,6 +85,9 @@ void InterfacciaConsole::MostraMenu() {
     cout << "2 - Visualizza una tessera\n";
     cout << "3 - Scambia due tessere\n";
     cout << "4 - Verifica validita' dell'orario\n";
+    cout << "5 - Visualizza elenco classi\n";
+    cout << "6 - Cerca una classe\n";
+    cout << "7 - Aggiungi una classe\n";
     cout << "0 - Esci\n";
 }
 
@@ -91,13 +95,53 @@ void InterfacciaConsole::Esegui() {
     int scelta;
     do {
         MostraMenu();
-        scelta = LeggiIntero("Scelta: ", 0, 4);
+        scelta = LeggiIntero("Scelta: ", 0, 7);
         switch (scelta) {
         case 1: VisualizzaOrario(); break;
         case 2: VisualizzaTessera(); break;
         case 3: RichiediScambio(); break;
         case 4: VerificaOrario(); break;
+        case 5: VisualizzaClassi(); break;
+        case 6: CercaClasse(); break;
+        case 7: AggiungiClasse(); break;
         case 0: cout << "Chiusura del programma.\n"; break;
         }
     } while (scelta != 0);
+}
+
+void InterfacciaConsole::VisualizzaClassi() {
+    cout << "\nCLASSI DEL DOCENTE\n";
+    for (int i = 0; i < elencoClassi.GetNumeroClassi(); i++) {
+        const Classe* classe = elencoClassi.Get(i);
+        cout << classe->GetSigla() << " - " << classe->GetIndirizzo()
+             << " - studenti: " << classe->GetNumeroStudenti() << "\n";
+    }
+}
+
+void InterfacciaConsole::CercaClasse() {
+    string sigla;
+    cout << "Sigla da cercare: ";
+    if (!(cin >> sigla)) return;
+    int indice = elencoClassi.Cerca(sigla);
+    if (indice == -1) {
+        cout << "Classe non presente.\n";
+        return;
+    }
+    const Classe* classe = elencoClassi.Get(indice);
+    cout << "Trovata: " << classe->GetSigla()
+         << " - " << classe->GetIndirizzo()
+         << " - studenti: " << classe->GetNumeroStudenti() << "\n";
+}
+
+void InterfacciaConsole::AggiungiClasse() {
+    string sigla, indirizzo;
+    cout << "Sigla: ";
+    if (!(cin >> sigla)) return;
+    cout << "Indirizzo (una parola): ";
+    if (!(cin >> indirizzo)) return;
+    int numero = LeggiIntero("Numero studenti (1-40): ", 1, 40);
+    if (elencoClassi.Aggiungi(Classe(sigla, indirizzo, numero)))
+        cout << "Classe aggiunta all'archivio.\n";
+    else
+        cout << "Inserimento rifiutato: sigla vuota o gia' presente.\n";
 }
