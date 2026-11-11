@@ -182,7 +182,7 @@ Gli studenti applicano la stessa sequenza al proprio orario di classe: identific
 
 **Domande conclusive:** Chi possiede una tessera? Perché `Get` è potenzialmente pericoloso? Perché il menu non appartiene a `Orario`? Perché uno scambio rifiutato deve ripristinare lo stato precedente?
 
-Nella **P1** sarà possibile sostituire la rappresentazione interna di `Orario` mantenendo, per quanto possibile, invariati i servizi offerti alle altre classi.
+Nella **P1** aggiungeremo un archivio dinamico di oggetti per valore con `std::vector`: il docente gestirà le classi e gli studenti le aule. La matrice `Tessera* celle[5][8]` resterà invariata.
 
 ---
 
