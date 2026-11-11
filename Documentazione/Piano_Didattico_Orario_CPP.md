@@ -109,13 +109,13 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 | P0 | Orario singolo visualizzabile | Classi, puntatori, memoria | Prerequisiti C++ |
 | P1 | Orario P0 con archivio di classi/aule | `std::vector` di oggetti per valore, ricerca, incapsulamento | P0 |
 | P2 | Scambi con vincoli estensibili | Invarianti, ereditarietà, classi astratte, polimorfismo | P1 e scambi P0 |
-| P2 | Cronologia e annullamento | ADT pila, `std::stack` | P2 |
-| P3 | Richieste di scambio | ADT coda, `std::queue` | P2 |
-| P4 | Ricerca e analisi | Iteratori, algoritmi STL, template | P1–P3 |
-| P5 | Orari di più soggetti | Contenitori, identità, ricerca, vincoli incrociati | P4 |
-| P6 | Modello istituto e viste integrate | Riutilizzo, composizione, coerenza dei dati | P5 |
-| P7 | Collaudo e consegna della versione C++ | Testing, Git, documentazione | P6 |
-| P8 | Interfaccia WPF sul nucleo C++ | Eventi WPF, interoperabilità C++/CLI, gestione risorse | P7 |
+| P3 | Cronologia e annullamento | ADT pila, `std::stack` | P2 |
+| P4 | Richieste di scambio | ADT coda, `std::queue` | P2–P3 |
+| P5 | Ricerca e analisi | Iteratori, algoritmi STL, template | P1–P4 |
+| P6 | Orari di più soggetti | Contenitori, identità, ricerca, vincoli incrociati | P5 |
+| P7 | Modello istituto e viste integrate | Riutilizzo, composizione, coerenza dei dati | P6 |
+| P8 | Collaudo e consegna della versione C++ | Testing, Git, documentazione | P7 |
+| P9 | Interfaccia WPF sul nucleo C++ | Eventi WPF, interoperabilità C++/CLI, gestione risorse | P8 |
 
 La **P9** è un'estensione successiva alla consegna del programma console: non introduce una seconda implementazione di `Model` ed `Engine` in C#.
 
@@ -153,7 +153,7 @@ Le fasi P6 e P7 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** inserimento riuscito di un elemento nuovo; rifiuto di una sigla duplicata; ricerca presente/assente; accesso valido/non valido gestito; elenco iniziale privo di duplicati e coerente con le sigle delle tessere; funzionalità P0 ancora operative. Specificare che eventuali puntatori/referenze a elementi del `vector` non sono proprietari e possono essere invalidati da modifiche al contenitore.
 - **Output:** due applicazioni console autonome estese con archivi di oggetti per valore; base per P2. La specifica sistematica degli invarianti e degli scambi controllati rimane in P2.
 
-### P2 — Scambi controllati e vincoli polimorfici (fusione delle precedenti P2 e P2)
+### P2 — Scambi controllati e vincoli polimorfici (fusione delle precedenti P2 e P3)
 
 - **Obiettivo:** consolidare lo scambio della P0 e applicare più vincoli mediante un'interfaccia polimorfica, senza riscrivere il motore per ogni nuova regola.
 - **Problema concreto:** una modifica dell'orario deve rispettare regole diverse; se almeno una non è soddisfatta, lo stato precedente deve essere ripristinato integralmente.
@@ -188,7 +188,7 @@ Le fasi P6 e P7 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Obiettivo:** gestire richieste in ordine di arrivo.
 - **Problema concreto:** separare richiesta e applicazione della modifica.
 - **Nuovo concetto:** ADT coda, disciplina FIFO, `std::queue`.
-- **Prerequisiti:** P2–P3.
+- **Prerequisiti:** P2.
 - **Competenze:** accodare, processare, rifiutare o accettare richieste mantenendo l'ordine.
 - **Argomenti:** `push`, `front`, `pop`, `empty`, `RichiestaScambio`, esito.
 - **Prototipo docente:** richieste di modifica agli impegni del docente.
