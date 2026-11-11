@@ -1,10 +1,10 @@
-# OrarioDocenteCPP — P0 e P1
+# OrarioDocenteCPP_P1 — prototipo consolidato P1
 
 Prototipo console C++17 dell'orario di **un solo docente**. Ogni tessera contiene materia, classe e aula. La matrice `Tessera* celle[5][8]` e' volutamente conservata dal prototipo precedente.
 
 ## Ambiente di sviluppo
 
-Il percorso didattico utilizza **Visual Studio** con un normale progetto **Applicazione console C++**. Aggiungere al progetto i file `.h` e `.cpp` delle cartelle `Model`, `Engine` e della directory principale, quindi compilare ed eseguire dall'IDE.
+Il percorso didattico utilizza **Visual Studio** con un normale progetto **Applicazione console C++**. Aprire `OrarioDocenteCPP_P1.sln` in Visual Studio, quindi compilare ed eseguire dall'IDE.
 
 Non sono richiesti generatori di progetto o strumenti di build esterni. I file `.h` non vanno compilati separatamente.
 
