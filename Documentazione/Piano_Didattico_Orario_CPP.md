@@ -109,17 +109,17 @@ I problemi devono essere **analoghi ma non identici**: stessa competenza informa
 | P0 | Orario singolo visualizzabile | Classi, puntatori, memoria | Prerequisiti C++ |
 | P1 | Orario P0 con archivio di classi/aule | `std::vector` di oggetti per valore, ricerca, incapsulamento | P0 |
 | P2 | Scambi con vincoli estensibili | Invarianti, ereditarietà, classi astratte, polimorfismo | P1 e scambi P0 |
-| P3 | Cronologia e annullamento | ADT pila, `std::stack` | P2 |
-| P4 | Richieste di scambio | ADT coda, `std::queue` | P2 |
-| P5 | Ricerca e analisi | Iteratori, algoritmi STL, template | P1–P4 |
-| P6 | Orari di più soggetti | Contenitori, identità, ricerca, vincoli incrociati | P5 |
-| P7 | Modello istituto e viste integrate | Riutilizzo, composizione, coerenza dei dati | P6 |
-| P8 | Collaudo e consegna della versione C++ | Testing, Git, documentazione | P7 |
-| P9 | Interfaccia WPF sul nucleo C++ | Eventi WPF, interoperabilità C++/CLI, gestione risorse | P8 |
+| P2 | Cronologia e annullamento | ADT pila, `std::stack` | P2 |
+| P3 | Richieste di scambio | ADT coda, `std::queue` | P2 |
+| P4 | Ricerca e analisi | Iteratori, algoritmi STL, template | P1–P3 |
+| P5 | Orari di più soggetti | Contenitori, identità, ricerca, vincoli incrociati | P4 |
+| P6 | Modello istituto e viste integrate | Riutilizzo, composizione, coerenza dei dati | P5 |
+| P7 | Collaudo e consegna della versione C++ | Testing, Git, documentazione | P6 |
+| P8 | Interfaccia WPF sul nucleo C++ | Eventi WPF, interoperabilità C++/CLI, gestione risorse | P7 |
 
 La **P9** è un'estensione successiva alla consegna del programma console: non introduce una seconda implementazione di `Model` ed `Engine` in C#.
 
-Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non deve essere trattato come un semplice dettaglio dell'ultima versione. La distribuzione oraria resta aperta.
+Le fasi P6 e P7 sono esplicite perché il requisito **X classi / Y docenti** non deve essere trattato come un semplice dettaglio dell'ultima versione. La distribuzione oraria resta aperta.
 
 ---
 
@@ -153,7 +153,7 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** inserimento riuscito di un elemento nuovo; rifiuto di una sigla duplicata; ricerca presente/assente; accesso valido/non valido gestito; elenco iniziale privo di duplicati e coerente con le sigle delle tessere; funzionalità P0 ancora operative. Specificare che eventuali puntatori/referenze a elementi del `vector` non sono proprietari e possono essere invalidati da modifiche al contenitore.
 - **Output:** due applicazioni console autonome estese con archivi di oggetti per valore; base per P2. La specifica sistematica degli invarianti e degli scambi controllati rimane in P2.
 
-### P2 — Scambi controllati e vincoli polimorfici (fusione delle precedenti P2 e P3)
+### P2 — Scambi controllati e vincoli polimorfici (fusione delle precedenti P2 e P2)
 
 - **Obiettivo:** consolidare lo scambio della P0 e applicare più vincoli mediante un'interfaccia polimorfica, senza riscrivere il motore per ogni nuova regola.
 - **Problema concreto:** una modifica dell'orario deve rispettare regole diverse; se almeno una non è soddisfatta, lo stato precedente deve essere ripristinato integralmente.
@@ -167,23 +167,23 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Proprietà e durata:** i puntatori `Vincolo*` sono non proprietari; gli oggetti vincolo devono sopravvivere al loro utilizzo da parte del motore. Non introdurre in questa fase `unique_ptr`, gerarchie di `Tessera` o algoritmi STL avanzati.
 - **Perimetro:** i vincoli riguardano il singolo orario; la verifica dei conflitti globali tra più docenti e classi è rinviata all'integrazione nel modello d'istituto.
 - **Verifica oggettiva:** scambio valido applicato; posizioni invalide respinte; violazione del primo o del secondo vincolo respinta con orario identico allo stato iniziale; nuovo vincolo inserito senza cambiare le classi di vincolo esistenti; assenza di modifiche parziali.
-- **Output:** motore degli scambi con validazione polimorfica e comportamento di ripristino verificabile; base per la cronologia P3.
+- **Output:** motore degli scambi con validazione polimorfica e comportamento di ripristino verificabile; base per la cronologia P2.
 
 ### P3 — Annullamento con pila
 
 - **Obiettivo:** annullare gli ultimi scambi riusciti.
 - **Problema concreto:** recuperare lo stato precedente dopo una modifica.
 - **Nuovo concetto:** ADT pila, disciplina LIFO, `std::stack`.
-- **Prerequisiti:** P2.
+- **Prerequisiti:** P2–P2.
 - **Competenze:** scegliere una pila, registrare modifiche e implementare il ripristino.
 - **Argomenti:** `push`, `top`, `pop`, `empty`, classe `Modifica`, cronologia.
 - **Prototipo docente:** annullamento sequenziale di scambi di impegni.
 - **Compito studenti:** annullamento sequenziale di scambi di lezioni, con casi di test diversi.
 - **Vincoli:** solo modifiche riuscite nella pila; annullare non deve registrare una nuova modifica.
 - **Verifica oggettiva:** due scambi seguiti da due annullamenti ripristinano l'ordine inverso; pila vuota gestita; stato sempre coerente.
-- **Output:** prototipi con cronologia; base per P5.
+- **Output:** prototipi con cronologia; base per P4.
 
-### P3 — Richieste di scambio con coda
+### P4 — Richieste di scambio con coda
 
 - **Obiettivo:** gestire richieste in ordine di arrivo.
 - **Problema concreto:** separare richiesta e applicazione della modifica.
@@ -195,9 +195,9 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Compito studenti:** richieste di modifica delle lezioni di classe.
 - **Vincoli:** ogni richiesta è elaborata una volta; richiesta rifiutata non modifica l'orario e non entra nella cronologia delle modifiche riuscite.
 - **Verifica oggettiva:** ordine FIFO osservabile; richiesta non valida rifiutata; richiesta valida applicata e annullabile.
-- **Output:** gestione delle richieste; base per P6.
+- **Output:** gestione delle richieste; base per P5.
 
-### P3 — Ricerche, statistiche e template
+### P5 — Ricerche, statistiche e template
 
 - **Obiettivo:** interrogare gli orari e riutilizzare algoritmi.
 - **Problema concreto:** evitare codice ripetuto per conteggi e ricerche.
@@ -211,12 +211,12 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** conteggi su dataset noto, ricerche presenti/assenti, almeno un riuso generico motivato.
 - **Output:** funzioni di analisi; base per P6.
 
-### P3 — Più docenti e più classi
+### P6 — Più docenti e più classi
 
 - **Obiettivo:** estendere ciascun prototipo da un soggetto a più soggetti.
 - **Problema concreto:** scegliere, cercare e gestire X classi o Y docenti.
 - **Nuovo concetto:** identità degli oggetti, collezioni di entità, relazioni tra dati.
-- **Prerequisiti:** P6.
+- **Prerequisiti:** P5.
 - **Competenze:** gestire insiemi dinamici di oggetti, identificatori stabili, ricerca e controlli incrociati.
 - **Argomenti:** `vector`, eventuale `map`, identificatori, lookup, distinzione tra entità e viste.
 - **Prototipo docente:** gestione di Y docenti con selezione dell'orario individuale.
@@ -225,7 +225,7 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** almeno tre soggetti di prova per percorso, aggiunta e selezione, nessuna confusione tra identificatori.
 - **Output:** due applicazioni multi-soggetto; punto di partenza per l'integrazione.
 
-### P3 — Convergenza in `OrarioIstituto`
+### P7 — Convergenza in `OrarioIstituto`
 
 - **Obiettivo:** integrare le due viste in un'unica applicazione coerente.
 - **Problema concreto:** la stessa lezione compare nell'orario di classe e in quello del docente; evitare divergenze.
@@ -237,14 +237,14 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Compito studenti:** integrare la vista per classe nel modello condiviso, contribuire ai test di coerenza e alle operazioni incrociate.
 - **Vincoli:** una sola registrazione logica per lezione; scambi che coinvolgono docenti e classi verificati globalmente; non imporre superclasse comune se non giustificata.
 - **Verifica oggettiva:** spostamento valido visibile in entrambe le viste; conflitti respinti; annullamento ripristina entrambe le viste; X e Y variabili.
-- **Output:** primo programma integrato; base per P9.
+- **Output:** primo programma integrato; base per P8.
 
-### P3 — Collaudo, documentazione e consegna
+### P8 — Collaudo, documentazione e consegna
 
 - **Obiettivo:** consegnare un'applicazione integrata stabile e comprensibile.
 - **Problema concreto:** dimostrare la correttezza di un sistema costruito in più fasi.
 - **Nuovo concetto:** test sistematici, regressione, qualità e documentazione.
-- **Prerequisiti:** P6.
+- **Prerequisiti:** P7.
 - **Competenze:** costruire casi di prova, documentare invarianti, correggere difetti, organizzare la consegna Git.
 - **Argomenti:** test di unità e integrazione, casi limite, debugging, README, versionamento.
 - **Prototipo docente:** suite dimostrativa dei requisiti e casi di errore.
@@ -253,12 +253,12 @@ Le fasi P6 e P8 sono esplicite perché il requisito **X classi / Y docenti** non
 - **Verifica oggettiva:** matrice RF01–RF12 superata su dataset condiviso, nessuna incoerenza nota, build riproducibile e documentazione aggiornata.
 - **Output:** versione finale del Gestore Orario in C++ con interfaccia console; base stabile per l'eventuale P9.
 
-### P3 — Integrazione C++/C# e interfaccia grafica WPF
+### P9 — Integrazione C++/C# e interfaccia grafica WPF
 
 - **Obiettivo:** realizzare una GUI WPF in C# riutilizzando `Model` ed `Engine` C++ già collaudati.
 - **Problema concreto:** sostituire l'interazione console con eventi e controlli grafici senza riscrivere la logica dell'orario.
 - **Nuovi concetti:** interoperabilità fra codice nativo e .NET tramite C++/CLI; programmazione guidata dagli eventi.
-- **Prerequisiti:** P9; nozioni di base di C#, XAML, eventi WPF e gestione delle risorse.
+- **Prerequisiti:** P8; nozioni di base di C#, XAML, eventi WPF e gestione delle risorse.
 - **Competenze:** progettare un bridge, trasferire dati e risultati in modo sicuro, gestire la durata degli oggetti nativi, separare UI e servizi applicativi.
 - **Argomenti:** libreria C++ nativa, progetto C++/CLI, classi bridge, conversione di stringhe e oggetti, code-behind WPF, gestori di eventi, rilascio delle risorse.
 - **Prototipo docente:** finestra WPF per consultare l'orario dei docenti ed eseguire scambi delegati al motore C++.
@@ -328,7 +328,7 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 - STL come strumento principale per pile, code e contenitori; implementazioni fisiche facoltative.
 - Alberi binari come approfondimento, non vincolo del progetto.
 - Interfaccia console per il percorso C++ P0–P8 e gestione di un orario esistente, non generazione automatica.
-- Dopo P9, estensione P9 con interfaccia C# / WPF e bridge C++/CLI, riutilizzando `Model` ed `Engine` nativi senza riscriverli.
+- Dopo P8, estensione P9 con interfaccia C# / WPF e bridge C++/CLI, riutilizzando `Model` ed `Engine` nativi senza riscriverli.
 - Documento Markdown come fonte per chat, materiali e sviluppo.
 
 ### Decisioni ancora aperte
@@ -349,7 +349,7 @@ Valutare separatamente: **correttezza funzionale**, **comprensione dei concetti*
 |---|---|---|
 | 1.0 | 2026-11-04 | Prima stesura: obiettivi, requisiti, sviluppo parallelo, fasi P0–P8, integrazione finale e questioni aperte |
 | 1.1 | 2026-11-11 | Aggiunta P9: GUI WPF in C#, bridge C++/CLI, riuso di Model ed Engine C++; aggiornati competenze, requisiti, regole e struttura repository |
-| 1.4 | 2026-11-11 | Fusione delle precedenti P2 e P3; rinumerazione delle fasi successive (WPF ora P9); aggiornamento dei prerequisiti e dei vincoli di ownership. |\n| 1.2 | 2026-11-11 | Ridefinita P1: ElencoClassi nel progetto docente ed ElencoAule nel progetto studenti con vector di oggetti per valore; matrice Tessera* invariata; adeguato raccordo con P2 |
+| 1.4 | 2026-11-11 | Fusione delle precedenti P2 e P3; rinumerazione delle fasi successive (WPF ora P9). |\n| 1.3 | 2026-11-11 | Consolidato l'ambiente Visual Studio. |\n| 1.2 | 2026-11-11 | Ridefinita P1: ElencoClassi nel progetto docente ed ElencoAule nel progetto studenti con vector di oggetti per valore; matrice Tessera* invariata; adeguato raccordo con P2 |
 
 ### Nota di gestione — ambiente di compilazione (11 novembre 2026)
 
